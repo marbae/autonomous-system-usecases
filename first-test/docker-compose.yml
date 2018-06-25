@@ -34,7 +34,7 @@ services:
     #image need to be built locally
     #image imu:latest is using libcluon v0.0.101
     opendlv-proxy-ellipse2n:
-        image: 
+        image: proxy-imu:v0.0.101
         network_mode: "host"
         devices:
             - "/dev/ttyUSB0:/dev/ttyUSB0"
