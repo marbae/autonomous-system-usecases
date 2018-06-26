@@ -57,7 +57,7 @@ services:
         command: "steering --cid=${CID} --cidSteering=219 --id=1 --verbose=1"
 
     motion:
-        image: chalmersfsd/logic-action-motion:pre-release-f23626c
+        image: chalmersfsd/logic-action-motion:pre-release-d2068bf
         network_mode: "host"
         command: "motion --cid=${CID} --id=1 --verbose=1"
 
