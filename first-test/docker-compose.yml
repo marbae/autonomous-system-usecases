@@ -63,13 +63,13 @@ services:
         command: "cfsd18-perception-detectcone --cid=${CID} --name=camera0 --width=1344 --height=376 --bpp=24 --verbose --id=118 --threshold=0.85 --timeDiffMilliseconds=20 --separationTimeMs=10 --checkLidarMilliseconds=1000 --senderStamp=118 --attentionSenderStamp=116 --offline=1 --annotate=0"
 
     cfsd18-sensation-attention:
-        image: chalmersfsd/cfsd18-sensation-attention:pre-release-5f67e91
+        image: chalmersfsd/cfsd18-sensation-attention:pre-release-aa3d242
         network_mode: "host"
         ipc: host
         command: "cfsd18-sensation-attention --cid=${CID} --verbose --id=116 --xBoundary=4 --yBoundary=12 --groundLayerZ=-0.3 --coneHeight=0.5 --connectDistanceThreshold=0.4 --layerRangeThreshold=0.06 --minNumOfPointsForCone=2 --maxNumOfPointsForCone=80 --farConeRadiusThreshold=0.2 --nearConeRadiusThreshold=0.25 --zRangeThreshold=0.08 --inlierRangeThreshold=0.06 --dotThreshold=0.1 --inlierFoundThreshold=150 --numberOfIterations=10"
 
     opendlv-logic-cfsd18-sensation-slam:
-        image: chalmersfsd/opendlv-logic-cfsd18-sensation-slam:pre-release-2da2430
+        image: chalmersfsd/opendlv-logic-cfsd18-sensation-slam:pre-release-97687ec
         network_mode: "host"
         depends_on:
             - proxy-camera
