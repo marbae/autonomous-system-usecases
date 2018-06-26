@@ -28,7 +28,7 @@ services:
 
     # microservice for ...
     cfsd18-cognition-track:
-        image: chalmersfsd/cfsd18-cognition-track:pre-release-c4f7569
+        image: chalmersfsd/cfsd18-cognition-track:pre-release-3e0335d
         network_mode: "host"
         command: "/usr/bin/cfsd18-cognition-track --cid=${CID} --verbose=0 --id=221 --surfaceId=211 --speedId=232 \
         --receiveTimeLimit=0.001 --distanceBetweenPoints=0.5 --useTraceBack=0 --useMoveOrigin=1 --previewTime=0.3 \
