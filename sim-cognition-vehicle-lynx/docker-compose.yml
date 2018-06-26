@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+    # microservice for ...
+    cfsd18-sim-globalposition:
+        image: chalmersrevere/opendlv-sim-global-amd64:v0.0.5
+        network_mode: "host"
+        command: "/usr/bin/opendlv-sim-global --cid=${CID} --freq=50 \
+        --frame-id=232 --x=${X} --y=${Y} --yaw=${YAW}"
+
+    # microservice for ...
+    cfsd18-cognition-detectconelane:
+        image: chalmersfsd/cfsd18-cognition-detectconelane:pre-release-800b821
+        network_mode: "host"
+        command: "/usr/bin/cfsd18-cognition-detectconelane --cid=${CID} --verbose=0 --id=211 \
+        --fakeSlamActivated=${FAKESLAM} --guessDistance=3 --maxConeAngle=1.570796325 \
+        --coneWidthSeparationThreshold=3.5 --coneLengthSeparationThreshold=5.5 --receiveTimeLimit=0.001"
+
+    # microservice for ...
+    cfsd18-sim-cognition-detectcone:
+        image: detectcone:v0.1
+        network_mode: "host"
+        volumes:
+        - .:/opt/opendlv.data
+        command: "/usr/bin/cfsd18-sim-cognition-detectcone --cid=${CID} --verbose=0 --id=231 --freq=20 \
+        --detectRange=12 --detectWidth=5 --fakeSlamActivated=${FAKESLAM} --nConesFakeSlam=5 --startX=${X} --startY=${Y} --startHeading=${YAW} \
+        --mapFilename=${MAP}"
+
+    # microservice for ...
+    cfsd18-cognition-track:
+        image: track:v0.1
+        network_mode: "host"
+        command: "/usr/bin/cfsd18-cognition-track --cid=${CID} --verbose=0 --id=221 --surfaceId=211 --speedId=232 \
+        --receiveTimeLimit=0.001 --distanceBetweenPoints=0.5 --useTraceBack=0 --useMoveOrigin=1 --previewTime=0.3 \
+        --useSharp=0 --nSharpPreviewPoints=10 --sharpK1=0.17 --sharpKy=0.5 --sharpBigC=0.17 --sharpSmallC=1 \
+        --axSpeedProfile=-1 --velocityLimit=15 --mu=${MU} --axLimitPositive=5 --axLimitNegative=-5 --headingErrorDependency=0.5 \
+        --usePolyFit=0 --curvEstStepsize=5 --polynomialDegree=3 --pointsPerPolySegment=15 \
+        --wheelAngleLimit=25 --wheelBase=${WB} --frontToCog=${FTC}"
+
+    cfsd18-sim-cognition-vehiclemodel:
+        image: vehiclemodel:v0.1
+        network_mode: "host"
+        command: "/usr/bin/cfsd18-sim-cognition-vehiclemodel --cid=${CID} --verbose=0 --id=232 --freq=50 \
+        --frontToCog=${FTC} --mass=188 --momentOfInertiaZ=105 --length=${WB} --frictionCoefficient=${MU} \
+        --magicFormulaCAlpha=25229 --magicFormulaC=1 --magicFormulaE=-2"
+
+    cfsd18-sim-visualization:
+        image: cognition-track:19x
+        network_mode: "host"
+        command: "--cid=${CID}"
+
+    steering:
+        image: chalmersfsd/logic-action-steering:pre-release-b0d1def
+        network_mode: "host"
+        command: "steering --cid=${CID} --cidSteering=219 --id=1 --verbose=1"
+
+    motion:
+        image: chalmersfsd/logic-action-motion:pre-release-39e760c
+        network_mode: "host"
+        command: "motion --cid=${CID} --id=1 --verbose=1"
+
+    brakes:
+        image: chalmersfsd/logic-action-brakes:pre-release-5ff5a39
+        network_mode: "host"
+        command: "brakes --cid=${CID} --cidBraking=219 --id=1 --verbose=1"
