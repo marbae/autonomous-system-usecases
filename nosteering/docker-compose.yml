@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+    steering:
+        image: steering:nosteering
+        network_mode: "host"
+        command: "steering --cid=${CID} --cidSteering=219 --id=1 --verbose=1"
+
+    motion:
+        image: chalmersfsd/logic-action-motion:pre-release-675a8d2
+        network_mode: "host"
+        command: "motion --cid=${CID} --cidSM=219 --id=1 --verbose=1"
+
+    brakes:
+        image: chalmersfsd/logic-action-brakes:pre-release-6a1431c
+        network_mode: "host"
+        command: "brakes --cid=${CID} --cidBraking=219 --id=1 --verbose=1"
