@@ -20,7 +20,7 @@ services:
          memlock:
            soft: 5600000 #1516032
            hard: 5600000 
-       command: "opendlv-device-camera-opencv --name=camera0 --bgr2rgb --cid=${CID} --camera=/dev/video0 --width=1344 --height=376 --bpp=24 --freq=15"
+       command: "opendlv-device-camera-opencv --name=camera0 --bgr2rgb --cid=${CID} --camera=/dev/video0 --width=1344 --height=376 --bpp=24 --freq=30"
 
     proxy-velodyne16:
         image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.7
