@@ -1,6 +1,29 @@
 version: '2'
 
 services:
+    odsupercomponent:
+        image: ${IMAGE}
+        network_mode: host
+        volumes:
+        - .:/opt/opendlv.data
+        command: "/opt/od4/bin/odsupercomponent --cid=${CID} --verbose=0 --configuration=/opt/opendlv.data/configuration"
+
+    # recorder
+    odrecorderh264:
+       image: ${IMAGE}
+       depends_on:
+           - odsupercomponent
+           - proxy-camera
+           - proxy-velodyne16
+           - proxy-ellipse2n
+       volumes:
+           - ./recordings:/opt/recordings
+       user: odv
+       network_mode: host
+       ipc: host
+       working_dir: "/opt/recordings"
+       command: "/opt/od4/bin/odrecorderh264 --cid=${CID}"
+
     #configure camera on the computer first
     proxy-camera:
        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.4
