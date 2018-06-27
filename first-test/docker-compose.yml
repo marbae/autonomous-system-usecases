@@ -15,7 +15,6 @@ services:
            - odsupercomponent
            - proxy-camera
            - proxy-velodyne16
-           - proxy-ellipse2n
        volumes:
            - ./recordings:/opt/recordings
        user: odv
