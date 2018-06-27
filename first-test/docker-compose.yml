@@ -98,7 +98,7 @@ services:
 #            - proxy-velodyne16
 #            - opendlv-proxy-ellipse2n
 #        ipc: host
-#        command: "opendlv-logic-cfsd18-sensation-slam --cid=${CID} --id=120 --detectConeId=116 --estimationId=112 --gatheringTimeMs=20 --sameConeThreshold=1.5 --refLatitude=57.714051 --refLongitude=11.948666 --timeBetweenKeyframes=150 --coneMappingThreshold=7 --conesPerPacket=20 --localization=0 --stateMachineId=1401"
+#        command: "opendlv-logic-cfsd18-sensation-slam --cid=${CID} --id=120 --detectConeId=116 --estimationId=112 --gatheringTimeMs=20 --sameConeThreshold=1.5 --refLatitude=57.777328 --refLongitude=12.7808598 --timeBetweenKeyframes=150 --coneMappingThreshold=7 --conesPerPacket=20 --localization=0 --stateMachineId=1401"
 
     # microservice for ...
     cfsd18-cognition-detectconelane:
