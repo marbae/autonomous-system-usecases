@@ -5,7 +5,7 @@ services:
     cfsd18-sim-globalposition:
         image: chalmersrevere/opendlv-sim-global-amd64:v0.0.5
         network_mode: "host"
-        command: "/usr/bin/opendlv-sim-global --cid=${CID} --freq=50 \
+        command: "/usr/bin/opendlv-sim-global --cid=${CID} --freq=20 \
         --frame-id=232 --x=${X} --y=${Y} --yaw=${YAW}"
 
     # microservice for ...
@@ -42,14 +42,15 @@ services:
     cfsd18-sim-cognition-vehiclemodel:
         image: chalmersfsd/cfsd18-sim-cognition-vehiclemodel:pre-release-7ae3a77
         network_mode: "host"
-        command: "/usr/bin/cfsd18-sim-cognition-vehiclemodel --cid=${CID} --verbose=0 --id=232 --freq=50 \
+        command: "/usr/bin/cfsd18-sim-cognition-vehiclemodel --cid=${CID} --verbose=0 --id=232 --freq=20 \
         --frontToCog=${FTC} --rollRes=0.02 --mass=188 --momentOfInertiaZ=105 --length=${WB} --frictionCoefficient=${MU} \
         --magicFormulaCAlpha=25229 --magicFormulaC=1 --magicFormulaE=-2"
 
     cfsd18-sim-visualization:
         image: chalmersfsd/cfsd18-sim-visualization:pre-release-778bfb6
         network_mode: "host"
-        command: "--cid=${CID}"
+        #command: "--cid=${CID}"
+        command: "--cid=219"
 
     steering:
         image: chalmersfsd/logic-action-steering:pre-release-b0d1def
@@ -57,11 +58,11 @@ services:
         command: "steering --cid=${CID} --cidSteering=219 --id=1 --verbose=1"
 
     motion:
-        image: chalmersfsd/logic-action-motion:pre-release-d2068bf
+        image: chalmersfsd/logic-action-motion:pre-release-675a8d2
         network_mode: "host"
-        command: "motion --cid=${CID} --id=1 --verbose=1"
+        command: "motion --cid=${CID} --cidSM=219 --id=1 --verbose=1"
 
     brakes:
-        image: chalmersfsd/logic-action-brakes:pre-release-5ff5a39
+        image: chalmersfsd/logic-action-brakes:pre-release-6a1431c
         network_mode: "host"
         command: "brakes --cid=${CID} --cidBraking=219 --id=1 --verbose=1"
